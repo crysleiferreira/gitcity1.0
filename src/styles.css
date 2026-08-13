@@ -1,3 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles for GitCity */
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import "tailwindcss";
+@source "./**/*.ts";
+@source "./**/*.html";
+@source "./app/**/*.{ts,html}";
