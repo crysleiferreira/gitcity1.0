@@ -165,10 +165,10 @@ export class CityComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['repos'] && !changes['repos'].isFirstChange()) {
+    if (changes['repos']) {
       this.buildCity();
     }
-    if (changes['timeOfDay'] && !changes['timeOfDay'].isFirstChange()) {
+    if (changes['timeOfDay']) {
       this.updateEnvironment();
     }
   }
@@ -290,7 +290,7 @@ export class CityComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.renderer.setClearColor(0x000000, 0);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
     el.appendChild(this.renderer.domElement);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
