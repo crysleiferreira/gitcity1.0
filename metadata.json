@@ -1,0 +1,6 @@
+{
+  "name": "GitCity",
+  "description": "Um gerador de cidade 3D baseado no perfil do GitHub.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
