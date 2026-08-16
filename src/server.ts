@@ -5,7 +5,7 @@ import {
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import express from 'express';
-import {join} from 'node:path';
+import { join } from 'node:path';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
@@ -38,12 +38,12 @@ app.post('/api/github/token', (req, res) => {
 app.get('/api/github/{*splat}', async (req, res) => {
   const githubPath = req.path.replace('/api/github/', '');
   const targetUrl = `https://api.github.com/${githubPath}`;
-  
+
   const token = req.cookies.github_token;
   const headers: Record<string, string> = {
     'Accept': 'application/vnd.github.v3+json'
   };
-  
+
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
@@ -55,10 +55,10 @@ app.get('/api/github/{*splat}', async (req, res) => {
 
   try {
     const response = await fetch(finalUrl, { headers });
-    
+
     // Pass status and statusText along
     res.status(response.status);
-    
+
     const data = await response.text(); // sometimes empty or non-JSON
     try {
       res.json(JSON.parse(data));
@@ -89,17 +89,7 @@ app.use((req, res, next) => {
   angularApp
     .handle(req)
     .then((response) =>
-      {
-        if (response) {
-          // Enable Incremental Static Regeneration (ISR) on Vercel
-          // Serve from cache for up to 60 seconds.
-          // If a request comes in after 60s, serve stale cache (up to 1h) while regenerating in the background.
-          res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=3600');
-          writeResponseToNodeResponse(response, res);
-        } else {
-          next();
-        }
-      }
+      response ? writeResponseToNodeResponse(response, res) : next(),
     )
     .catch(next);
 });
